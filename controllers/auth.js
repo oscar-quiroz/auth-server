@@ -1,25 +1,25 @@
-const { response } = require('express');
+const { response } = require("express");
 
 const crearUsuario = (req, res = response) => {
     return res.json({
         ok: true,
-        mesg: "crear un nuevo usuario  /new"
-    })
-}
+        mesg: "crear un nuevo usuario  /new",
+    });
+};
 
 const loginUsuario = (req, res = response) => {
     return res.json({
         ok: true,
-        mesg: "Login de usuario  /"
-    })
-}
+        mesg: "Login de usuario  /",
+    });
+};
 
-
+//kshadlkhasdklhasklhdasl
 const renovarToken = (req, res = response) => {
     return res.json({
         ok: true,
-        mesg: "Renovado /renew"
-    })
-}
+        mesg: "Renovado /renew",
+    });
+};
 
-module.exports = { crearUsuario, loginUsuario, renovarToken }
+module.exports = { crearUsuario, loginUsuario, renovarToken };
