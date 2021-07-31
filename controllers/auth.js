@@ -1,8 +1,8 @@
 const { response } = require("express");
 const { validationResult } = require("express-validator");
 const Usuario = require("../models/Usuario");
-const bcrypt = require('bcryptjs')
-const { generarJWT } = require('../helpers/jwt')
+const bcrypt = require("bcryptjs");
+const { generarJWT } = require("../helpers/jwt");
 
 const crearUsuario = async(req, res = response) => {
     const { email, name, password } = req.body;
@@ -26,8 +26,8 @@ const crearUsuario = async(req, res = response) => {
         dbUser.password = bcrypt.hashSync(password, salt);
 
         //Generar el JWT como metodo de autenticacion
-        const token = await generarJWT(dbUser.id, name)
-            //crear usuario de base de datos
+        const token = await generarJWT(dbUser.id, name);
+        //crear usuario de base de datos
 
         await dbUser.save();
 
@@ -36,7 +36,7 @@ const crearUsuario = async(req, res = response) => {
             ok: true,
             uid: dbUser.id,
             name,
-            token
+            token,
         });
     } catch (error) {
         console.log(error);
@@ -51,46 +51,43 @@ const crearUsuario = async(req, res = response) => {
         mesg: "crear un nuevo usuario  /new",
     });
 };
-
+// login del usuariuo siuu
 const loginUsuario = async(req, res = response) => {
     const { email, password } = req.body;
 
     //
     try {
-
         const dbUser = await Usuario.findOne({ email });
 
         if (!dbUser) {
             return res.status(400).json({
                 ok_false,
-                msg: 'El correo no existe'
+                msg: "El correo no existe",
             });
         }
 
-        const validPassword = bcrypt.compareSync(password, dbUser.password)
+        const validPassword = bcrypt.compareSync(password, dbUser.password);
 
         if (!validPassword) {
             return res.status(400).json({
                 ok: false,
-                msg: "EL pásword no es valido"
-
-            })
+                msg: "EL pásword no es valido",
+            });
         }
 
-        const token = await generarJWT(dbUser.id, dbUser.name)
+        const token = await generarJWT(dbUser.id, dbUser.name);
 
         returnres.json({
             ok: true,
             uid: dbUser.id,
             name,
-            token
-        })
-
+            token,
+        });
     } catch (error) {
         console.log(error);
         return res.status(500).json({
             ok: false,
-            msg: 'hable con el administrador'
+            msg: "hable con el administrador",
         });
     }
 };
