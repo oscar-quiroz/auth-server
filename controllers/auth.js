@@ -61,7 +61,7 @@ const loginUsuario = async(req, res = response) => {
 
         if (!dbUser) {
             return res.status(400).json({
-                ok_false,
+                ok: false,
                 msg: "El correo no existe",
             });
         }
@@ -77,10 +77,10 @@ const loginUsuario = async(req, res = response) => {
 
         const token = await generarJWT(dbUser.id, dbUser.name);
 
-        returnres.json({
+        return res.json({
             ok: true,
             uid: dbUser.id,
-            name,
+            name: dbUser.name,
             token,
         });
     } catch (error) {
@@ -92,11 +92,17 @@ const loginUsuario = async(req, res = response) => {
     }
 };
 
-//kshadlkhasdklhasklhdasl
-const renovarToken = (req, res = response) => {
+//recibe token y lo valida
+const renovarToken = async(req, res = response) => {
+
+    const { uid, name } = req;
+    const token = await generarJWT(uid, name);
     return res.json({
         ok: true,
-        mesg: "Renovado /renew",
+        msg: "Renovado /renew",
+        uid,
+        name,
+        token
     });
 };
 
